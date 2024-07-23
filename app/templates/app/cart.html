@@ -1,0 +1,63 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block cart_content %}
+<div class="container" style="padding: 40px 0px 40px 0px; ">
+  <div class="row" style="margin-top: 100px;">
+    <div class="col-md-8 cart">
+      <div class="title">
+        <div class="row">
+          <div class="col">
+            <h4><b>Shopping Cart</b></h4>
+          </div>
+          <div class="col align-self-center text-right text-muted">{{order.get_cart_items}} items</div>
+        </div>
+      </div>
+      <div class="row border-top border-bottom">
+        {% for item in items %}
+        <div class="row main align-items-center">
+          <div class="col-2"><img class="img-fluid img-product" src="{{item.product.ImageURL}}"></div>
+          <div class="col">
+            <div class="row text-muted">Shirt</div>
+            <div class="row">{{item.product.name}}</div>
+          </div>
+          <div class="col">
+            <a data-product={{item.product.id}} data-action="remove" class=" cart-item update-cart" href="#">-</a>
+            <a class="cart-item" href="#" class="border">{{item.quantity}}</a>
+            <a data-product={{item.product.id}} data-action="add" class="update-cart cart-item" href="#">+</a>
+          </div>
+          <div class="col">$ {{item.product.price | floatformat:0}}</div>
+          <div data-product={{item.product.id}} class="col update-cart" data-action="delete">
+            <i class="fas fa-trash"></i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="back-to-shop"><a href="{% url 'home' %}" class="cart-item">&leftarrow;<span class="text-muted"> Back to shop</span></a></div>
+    </div>
+    <div class="col-md-4 summary">
+      <div>
+        <h5><b>Summary</b></h5>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">ITEMS {{order.get_cart_items}}</div>
+        <div class="col text-right">$ {{order.get_cart_total | floatformat:0}}</div>
+      </div>
+      <form class="shipping">
+        <p>SHIPPING</p>
+        <select>
+          <option class="text-muted">Standard-Delivery- $;5.00</option>
+        </select>
+        <p>GIVE CODE</p>
+        <input id="code" placeholder="Enter your code">
+      </form>
+      <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+        <div class="col">TOTAL PRICE</div>
+        <div class="col text-right">$ {{order.get_cart_total | floatformat:0}} </div>
+      </div>
+
+      <a href="{% url 'checkout' %}"><button class="btn-checkout">CHECKOUT</button></a>
+    </div>
+  </div>
+</div>
+{% endblock cart_content %}

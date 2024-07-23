@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- css -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="{% static "app/images/Lovepik_com-401748253-fashion-creative-pegasus-culture-communication-company-logo1.png" %}">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "app/css/styles.css" %}" />
+  <link rel="stylesheet" href="{% static "app/css/category.css" %}" />
+  <link rel="stylesheet" href="{% static "app/css/card.css" %}" />
+  <!-- <link rel="stylesheet" href="{% static "app/css/register.css" %}" /> -->
+  <link rel="stylesheet" href="{% static "app/css/cart.css" %}" />
+  <link rel="stylesheet" href="{% static "app/css/search.css" %}" />
+  <link rel="stylesheet" href="{% static "app/css/checkout.css" %}" />
+  <link rel="stylesheet" href="{% static "app/css/footer.css" %}" />
+  <link rel="stylesheet" href="{% static "app/css/banner.css" %}" />
+
+
+  <script type="text/javascript">
+    let user = '{{request.user}}'
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+  </script>
+  <title>HORSE</title>
+</head>
+
+<body>
+  <!-- Menu -->
+  <a href="" name="header"></a>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light menu-content fixed-top">
+      <div class="container">
+        <!-- Left-aligned items -->
+        <div class="left-item">
+          <a class="menu" href="{% url 'home' %}" style="font-weight: bold;">Home</a>
+          <a class="menu" href="#" style="font-weight: bold;">About</a>
+        </div>
+
+        <!-- Logo in the center -->
+        <!-- <a href="{% url 'home' %}" class="logo-brand"> -->
+        <img style="width: 10%; height: 10%; object-fit: contain;" src="{% static 'app/images/Lovepik_com-401748253-fashion-creative-pegasus-culture-communication-company-logo.png' %}" alt="">
+        <!-- </a> -->
+
+        <div class="right-item">
+          <div class="dropdown" style="top: 10px;">
+            <button style="border: none;" class="btn btn-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-search"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+              <form role="search" method="POST" action="{% url 'search' %}">
+                {% csrf_token %}
+                <input class="search" type="text" placeholder="Search.." name="searched">
+              </form>
+            </div>
+          </div>
+          <a class="" href="{% url 'cart' %}">
+            <span class="count-items">{{cartItems}}</span>
+            <i class="fas fa-shopping-cart" style="position: relative; right: 10px;"></i>
+          </a>
+
+          <!-- <a class="" href="#">Account</a> -->
+
+          <div class="dropdown ">
+            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="user-name">{{request.user}}</span>
+            </a>
+            <ul class="dropdown-menu  dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href=" {% url 'home' %}">Home</a></li>
+              <li style="display: {{user_not_login}}"><a class="dropdown-item" href=" {% url 'login' %}">Login</a></li>
+              <li style="display: {{user_not_login}}"><a class=" dropdown-item" href=" {% url 'register' %}">Sign up</a></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main body -->
+  {% block banner_slider %}{% endblock banner_slider %}
+  {% block main-content %}{% endblock main-content %}
+  {% block cart_content %}{% endblock cart_content %}
+  {% block content_checkout %}{% endblock content_checkout %}
+  {% block register %}{% endblock register %}
+  {% block login %}{% endblock login %}
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <a href="#header">
+        <div style="color: red;position: relative; bottom: 90px; text-align: center; ">
+          <img class="up-to-header" style="width: 50px;" src="{% static 'app/images/Group 43.png' %}" alt="">
+        </div>
+      </a>
+
+      <div class="row">
+        <div class="footer-col">
+          <h4>company</h4>
+          <ul>
+            <li><a href="#">about us</a></li>
+            <li><a href="#">our services</a></li>
+            <li><a href="#">privacy policy</a></li>
+            <li><a href="#">affiliate program</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>get help</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">shipping</a></li>
+            <li><a href="#">returns</a></li>
+            <li><a href="#">order status</a></li>
+            <li><a href="#">payment options</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>online shop</h4>
+          <ul>
+            <li><a href="#">watch</a></li>
+            <li><a href="#">bag</a></li>
+            <li><a href="#">shoes</a></li>
+            <li><a href="#">dress</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>follow us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <div>
+            <img class="logo-brand" style="width: 100%; height: 100%; object-fit: contain;" src="{% static 'app/images/Lovepik_com-401748253-fashion-creative-pegasus-culture-communication-company-logo1.png' %}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- javascript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static "app/js/myscript.js" %}"></script>
+  <script src="{% static "app/js/cart.js" %}"></script>
+</body>
+
+</html>
